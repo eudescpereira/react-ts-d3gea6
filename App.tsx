@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './style.css';
 
-const body = document.body;
+const body = document.getElementById('div');
 let questionNumbers;
 
 // Pegar um número aleatório
@@ -15,6 +15,7 @@ function randomNumber() {
     }
   }
 }
+
 randomNumber();
 
 // Mostrar Resultado
@@ -25,7 +26,7 @@ let form = document.getElementById('gameForm');
 // Inserir resposta
 var inputbox = document.getElementById('answerInput');
 
-let btn = document.getElementById('button');
+let btn = document.getElementsByTagName('button');
 
 export default function App() {
   var opportunities = 0;
@@ -39,7 +40,7 @@ export default function App() {
       // resposta correta
       if (answer === questionNumbers.join('')) {
         result.textContent =
-          'Você conseguiu! O número secreto: ' + questionNumbers.join('');
+          'Você conseguiu! O número secreto é: ' + questionNumbers.join('');
         inputbox.textContent = '';
         inputbox.focus();
         randomNumber();
@@ -73,7 +74,8 @@ export default function App() {
               cows += 1;
             }
           }
-          result.textContent = bulls + 'Bulls and ' + cows + ' Cows.';
+          result.textContent =
+            opportunities + ' tentativas' + bulls + ' Bulls' + cows + ' Cows';
           inputbox.textContent = '';
           inputbox.focus();
         }
@@ -83,33 +85,20 @@ export default function App() {
   return (
     <div className="App">
       <h1>Jogo da Senha</h1>
-      <h3>Bulls and Cows</h3>
-      <h1 id="result"></h1>
-      <p>
-        <label htmlFor="text">Digite 4 números diferentes: </label>
+      <h2>Bulls and Cows</h2>
+      <div id="div">
         <form id="gameForm">
+          <h3 id="result"></h3>
+          <h4>Digite 4 números diferentes:</h4>
           <input
             id="answerInput"
             type="text"
             pattern="^[0-9]*$"
             placeholder="Senha de 4 digitos"
           />{' '}
-          <button id="button" onClick={tentativa}>
-            Inserir
-          </button>
+          <button>Inserir</button>
         </form>
-      </p>
-      {Number.length > 0 && (
-        <table id="result" style={{ border: 'solid 1px black', width: '100%' }}>
-          <thead>
-            <tr key={opportunities}>
-              <th>Tentativa 1</th>
-              <th>Bulls</th>
-              <th>Cows</th>
-            </tr>
-          </thead>
-        </table>
-      )}
+      </div>
     </div>
   );
 }
